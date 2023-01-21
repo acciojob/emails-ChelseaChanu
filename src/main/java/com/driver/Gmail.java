@@ -56,12 +56,11 @@ public class Gmail extends Email {
             return null;
         }
         else{
-            Date latestDate = inbox.stream().map(Mail::getDate).max(Date::compareTo).get();
+            Date latestDate = new Date(Long.MIN_VALUE);;
             for(int i=0;i<inbox.size();i++){
                 Mail mail = inbox.get(i);
-                if(mail.getDate().compareTo(latestDate)==0){
+                if(mail.getDate().compareTo(latestDate)>0){
                     messageToReturn = mail.getMessage();
-                    break;
                 }
             }
         }
@@ -76,12 +75,11 @@ public class Gmail extends Email {
             return null;
         }
         else{
-            Date oldestDate = inbox.stream().map(Mail::getDate).min(Date::compareTo).get();
+            Date oldestDate = new Date(Long.MAX_VALUE);;
             for(int i=0;i<inbox.size();i++){
                 Mail mail = inbox.get(i);
-                if(mail.getDate().compareTo(oldestDate)==0){
+                if(mail.getDate().compareTo(oldestDate)<0){
                     messageToReturn = mail.getMessage();
-                    break;
                 }
             }
         }
