@@ -23,11 +23,13 @@ public class Gmail extends Email {
         // 2. The mails are received in non-decreasing order. This means that the date of a new mail is greater than equal to the dates of mails received already.
         if(inbox.size()==inboxCapacity){
             Date oldestDate = inbox.stream().map(Mail::getDate).min(Date::compareTo).get();
+            Mail mailToBeAdded = new Mail(date, sender, message);
             for(int i=0;i<inbox.size();i++){
-                Mail mail = inbox.get(i);
-                if(mail.getDate().compareTo(oldestDate)==0){
-                    inbox.remove(mail);
-                    trash.add(mail);
+                Mail currentMail = inbox.get(i);
+                if(currentMail.getDate().compareTo(oldestDate)==0){
+                    inbox.remove(currentMail);
+                    trash.add(currentMail);
+                    inbox.add(mailToBeAdded);
                     break;
                 }
             }
