@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Gmail extends Email {
 
-    int inboxCapacity; //maximum number of mails inbox can store
+    private int inboxCapacity; //maximum number of mails inbox can store
     //Inbox: Stores mails. Each mail has date (Date), sender (String), message (String). It is guaranteed that message is distinct for all mails.
     //Trash: Stores mails. Each mail has date (Date), sender (String), message (String)
     private ArrayList<Mail> inbox = new ArrayList<>();
@@ -22,17 +22,17 @@ public class Gmail extends Email {
         // 1. Each mail in the inbox is distinct.
         // 2. The mails are received in non-decreasing order. This means that the date of a new mail is greater than equal to the dates of mails received already.
         if(inbox.size()==inboxCapacity){
-            Date oldestDate = inbox.stream().map(Mail::getDate).min(Date::compareTo).get();
+            //Date oldestDate = inbox.stream().map(Mail::getDate).min(Date::compareTo).get();
             Mail mailToBeAdded = new Mail(date, sender, message);
-            for(int i=0;i<inbox.size();i++){
-                Mail currentMail = inbox.get(i);
-                if(currentMail.getDate().compareTo(oldestDate)==0){
+            //for(int i=0;i<inbox.size();i++){
+                Mail currentMail = inbox.get(0);
+                //if(currentMail.getDate().compareTo(oldestDate)==0){
                     inbox.remove(currentMail);
                     trash.add(currentMail);
                     inbox.add(mailToBeAdded);
-                    break;
-                }
-            }
+                    //break;
+               // }
+            //}
         }
     }
 
@@ -53,39 +53,35 @@ public class Gmail extends Email {
     public String findLatestMessage(){
         // If the inbox is empty, return null
         // Else, return the message of the latest mail present in the inbox
-        String messageToReturn = "";
+        //String messageToReturn = "";
         if(inbox.isEmpty()){
             return null;
         }
         else{
-            Date latestDate = new Date(Long.MIN_VALUE);;
-            for(int i=0;i<inbox.size();i++){
-                Mail mail = inbox.get(i);
-                if(mail.getDate().compareTo(latestDate)>0){
-                    messageToReturn = mail.getMessage();
-                }
-            }
+            //Date latestDate = new Date(Long.MIN_VALUE);;
+            //for(int i=0;i<inbox.size();i++){
+                Mail mail = inbox.get(inbox.size()-1);
+                // if(mail.getDate().compareTo(latestDate)>0){
+                //     messageToReturn = mail.getMessage();
+                // }
+            //}
+            return mail.getMessage();
         }
-        return messageToReturn;
     }
 
     public String findOldestMessage(){
         // If the inbox is empty, return null
         // Else, return the message of the oldest mail present in the inbox
-        String messageToReturn = "";
+        //String messageToReturn = "";
         if(inbox.isEmpty()){
             return null;
         }
         else{
-            Date oldestDate = new Date(Long.MAX_VALUE);;
-            for(int i=0;i<inbox.size();i++){
-                Mail mail = inbox.get(i);
-                if(mail.getDate().compareTo(oldestDate)<0){
-                    messageToReturn = mail.getMessage();
-                }
-            }
+            //Date oldestDate = new Date(Long.MAX_VALUE);;
+            //for(int i=0;i<inbox.size();i++){
+                Mail mail = inbox.get(0);
+                return mail.getMessage();
         }
-        return messageToReturn;
     }
 
     public int findMailsBetweenDates(Date start, Date end){

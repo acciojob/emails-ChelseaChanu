@@ -29,7 +29,7 @@ public class Email {
         boolean isLowerCase = false;
         boolean isNumber = false;
         boolean isSpecialCharacter = false;
-
+        boolean space = false;
         if(oldPassword.equals(password) && newPassword.length()>=8){
             for(int i = 0;i<newPassword.length();i++){
                 char ch = newPassword.charAt(i);
@@ -43,11 +43,14 @@ public class Email {
                 else if(Character.isDigit(ch)){
                     isNumber = true;
                 }
+                else if(Character.isWhitespace(ch)){
+                    space = true;
+                }
                 else{
                     isSpecialCharacter = true;
                 }
 
-                if(isUpperCase == true && isLowerCase == true && isNumber == true & isSpecialCharacter == true){
+                if(isUpperCase == true && isLowerCase == true && isNumber == true & isSpecialCharacter == true && space ==false){
                     password = newPassword;
                     break;
                 }
